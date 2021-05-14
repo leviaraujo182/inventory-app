@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card, TextInput, Button } from 'react-native-paper'
 
-export default function Login() {
+
+export default function Login({navigation}) {
 
     const theme = {
         colors: {
             primary: '#31405F',
-        
+
         },
     }
 
@@ -15,6 +16,10 @@ export default function Login() {
         colors: {
             primary: '#31405F'
         }
+    }
+
+    function ScreenHome(){
+        navigation.navigate('Home')
     }
 
  return (
@@ -25,8 +30,11 @@ export default function Login() {
            <Text style={styles.txtlogin}>LOGIN</Text>
            <TextInput label="Email" style={styles.inpt_email} theme={theme} />
            <TextInput label="Senha" style={styles.inpt_senha} theme={theme} />
-           <Button mode='contained' style={styles.btn_entrar}>Entrar</Button>
+           <Button mode='contained' style={styles.btn_entrar} onPress={ScreenHome}>Entrar</Button>
            <Button mode='outlined' style={styles.btn_cadastre} theme={btncad}>Cadastre-se</Button>
+           <TouchableOpacity>
+               <Text style={styles.txtproblem}>Problemas com login?</Text>
+           </TouchableOpacity>
        </Card>
    </View>
   );
@@ -47,7 +55,7 @@ const styles = StyleSheet.create({
         fontSize: 60,
         fontFamily: 'Roboto-Black'
     },
-    
+
     subtitle: {
         color: '#FFF',
         fontFamily: 'Roboto-Medium',
@@ -100,7 +108,12 @@ const styles = StyleSheet.create({
         marginRight: 30,
         borderRadius: 15,
         padding: 5,
- 
+
+    },
+
+    txtproblem: {
+      textAlign: 'center',
+      marginTop: 10,
+      color: '#31405F'
     }
 })
-
