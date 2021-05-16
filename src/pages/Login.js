@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Card, TextInput, Button } from 'react-native-paper'
+import { Card, TextInput, Button, HelperText } from 'react-native-paper'
 import firebase from '../../firebaseConfig'
 
 
@@ -9,11 +9,12 @@ export default function Login({navigation}) {
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [visible, setVisibile] = useState(false);
+    const [visiblePass, setVisibilePass] = useState(false);
 
     const theme = {
         colors: {
             primary: '#31405F',
-
         },
     }
 
@@ -28,22 +29,34 @@ export default function Login({navigation}) {
     }
 
     function FirebaseLogin(){
+        if(email == '' || senha == ''){
+            if(email == ''){
+                setVisibile(true);
+            }
+
+            if(senha == ''){
+                setVisibilePass(true);
+            }
+        } else {
         firebase.auth().signInWithEmailAndPassword(email, senha).then(()=>{
             navigation.navigate("Home");
         }).catch(()=>{
             console.log("Não logou");
         })
+
     }
+}
 
     useEffect(()=>{
         firebase.auth().onAuthStateChanged(function(user){
             if(user){
                 console.log("Logado com sucesso", user.uid);
             } else {
-                console.log("Não logado")
+                console.log("Não logado");
             }
         })
     }, [])
+
 
  return (
    <View style={styles.body}>
@@ -52,7 +65,9 @@ export default function Login({navigation}) {
        <Card style={styles.card}>
            <Text style={styles.txtlogin}>LOGIN</Text>
            <TextInput label="Email" style={styles.inpt_email} theme={theme} onChangeText={email => setEmail(email)} value={email} />
+           <HelperText type='error' visible={visible}>Campo vazio</HelperText>
            <TextInput label="Senha" style={styles.inpt_senha} theme={theme} onChangeText={senha => setSenha(senha)} value={senha} secureTextEntry={true} />
+           <HelperText type='error' visible={visiblePass}>Campo vazio</HelperText>
            <Button mode='contained' style={styles.btn_entrar} onPress={FirebaseLogin}>Entrar</Button>
            <Button mode='outlined' style={styles.btn_cadastre} theme={btncad}>Cadastre-se</Button>
            <TouchableOpacity>
@@ -88,7 +103,7 @@ const styles = StyleSheet.create({
     card: {
         marginTop: 20,
         width: '90%',
-        height: 400,
+        height: 450,
         borderRadius: 15
     },
 
@@ -112,7 +127,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         backgroundColor: '#FFF',
-        marginTop: 20
+        marginTop: 10
     },
 
     btn_entrar: {
