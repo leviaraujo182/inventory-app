@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Card, TextInput, Button, HelperText } from 'react-native-paper'
+import { View, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
+import { Card, TextInput, Button, HelperText, ActivityIndicator, Colors } from 'react-native-paper'
 import firebase from '../../firebaseConfig'
 
 
@@ -9,6 +9,7 @@ export default function Login({navigation}) {
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [indicator, setIndicator] = useState(false);
     const [visible, setVisibile] = useState(false);
     const [visiblePass, setVisibilePass] = useState(false);
 
@@ -38,8 +39,11 @@ export default function Login({navigation}) {
                 setVisibilePass(true);
             }
         } else {
+        setIndicator(true);
+        Keyboard.dismiss()
         firebase.auth().signInWithEmailAndPassword(email, senha).then(()=>{
             navigation.navigate("Home");
+            setIndicator(false)
         }).catch(()=>{
             console.log("Não logou");
         })
@@ -57,9 +61,14 @@ export default function Login({navigation}) {
         })
     }, [])
 
+    function Provisory(){
+        navigation.navigate("Home");
+    }
+
 
  return (
    <View style={styles.body}>
+       <ActivityIndicator animating={indicator} size={40} color={Colors.white} />
        <Text style={styles.title}>INVENTORY</Text>
        <Text style={styles.subtitle}>O SEU INVENTÁRIO DIGITAL</Text>
        <Card style={styles.card}>
@@ -68,7 +77,7 @@ export default function Login({navigation}) {
            <HelperText type='error' visible={visible}>Campo vazio</HelperText>
            <TextInput label="Senha" style={styles.inpt_senha} theme={theme} onChangeText={senha => setSenha(senha)} value={senha} secureTextEntry={true} />
            <HelperText type='error' visible={visiblePass}>Campo vazio</HelperText>
-           <Button mode='contained' style={styles.btn_entrar} onPress={FirebaseLogin}>Entrar</Button>
+           <Button mode='contained' style={styles.btn_entrar} onPress={Provisory}>Entrar</Button>
            <Button mode='outlined' style={styles.btn_cadastre} theme={btncad}>Cadastre-se</Button>
            <TouchableOpacity>
                <Text style={styles.txtproblem}>Problemas com login?</Text>

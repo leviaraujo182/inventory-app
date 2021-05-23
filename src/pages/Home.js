@@ -16,7 +16,7 @@ export default function pages({navigation}) {
 
             <View style={styles.grid}>
                 
-                <TouchableOpacity style={styles.btn_add}>
+                <TouchableOpacity style={styles.btn_add} onPress={AddProduto}>
                     <Image source={require('../img/add.png')} style={styles.img} />
                     <Text style={styles.txtcards}>Adicionar Produto</Text>
                 </TouchableOpacity>
