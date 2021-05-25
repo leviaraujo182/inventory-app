@@ -23,12 +23,15 @@ export default function invetoryapp() {
          ),
 
          headerTransparent: true,
-         headerTintColor: '#FFF'
-       })} />
+         headerTintColor: '#FFF',
+         headerLeft: null,
+         gestureEnabled: false,
+        
+       })} navigatio />
        <Stack.Screen name="AddProduto" component={AddProduto} options={{ 
          title: 'Adicionar Produto',
          headerTintColor: '#FFF',
-         headerTransparent: true
+         headerTransparent: true,
          }} />
      </Stack.Navigator>
    </NavigationContainer>

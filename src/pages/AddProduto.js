@@ -1,16 +1,40 @@
 import React, { useState } from 'react';
 import { View,Text, StyleSheet} from 'react-native';
-import { Card, TextInput } from 'react-native-paper'
+import { Card, TextInput, Button, HelperText } from 'react-native-paper'
 import { Picker } from '@react-native-picker/picker'
+import firebase from '../../firebaseConfig'
 
 
 export default function pages() {
+
+  const [helperNome, setHelperNome] = useState(false);
+  const [helperMarca, setHelperMarca] = useState(false);
+  const [helperQnt, setHelperQnt] = useState(false);
+
+  const [nomeProd, setNomeProd] = useState('');
+  const [marcaProd, setmarcaProd] = useState('');
+  const [qntdProd, setQntProd] = useState('');
+
+
 
   const inpt_style = {
     colors: {
       primary: '#31405F'
     }
   }
+
+  function VerificaCampos(){
+
+    firebase.database().ref('Produtos').set({
+      nomeProd: {nomeproduto: nomeProd, marcaproduto: marcaProd, qntproduto: qntdProd }
+
+    }).then(()=>{
+      console.log("Produto adicionado!")
+    }).catch(()=>{
+      console.log("Produto não adicionado!")
+    })
+  }
+
 
   const [selectedLanguage, setSelectedLanguage] = useState();
 
@@ -19,8 +43,10 @@ export default function pages() {
        <Card style={styles.card}>
           <View style={styles.content_card}>
             <Text style={styles.txt_preencha}>Preencha todos os campos corretamente</Text>
-            <TextInput label="Nome do produto" style={styles.input_addprod} theme={inpt_style} />
-            <TextInput label="Marca do produto" style={styles.input_addprod} theme={inpt_style} />
+            <TextInput label="Nome do produto" style={styles.input_addprod} theme={inpt_style} onChangeText={(text)=> setNomeProd(text)} />
+            <HelperText type='error' visible={helperNome}>Campo vazio</HelperText>
+            <TextInput label="Marca do produto" style={styles.input_addprod} theme={inpt_style} onChangeText={(text)=> setmarcaProd(text)} />
+            <HelperText type='error' visible={helperMarca}>Campo vazio</HelperText>
             <View style={styles.est_picker}>
             <Picker style={styles.picker} selectedValue={selectedLanguage} onValueChange={(itemValue, itemIndex) => setSelectedLanguage(itemValue)}>
                 <Picker.Item label="Alimentos" value="java" />
@@ -29,7 +55,9 @@ export default function pages() {
                 <Picker.Item label="Limpeza" value="js" />
             </Picker>
             </View>
-            <TextInput keyboardType='phone-pad' label="Quantidade" style={styles.input_addprod} theme={inpt_style} />
+            <TextInput keyboardType='phone-pad' label="Quantidade" style={styles.input_addprod} theme={inpt_style} onChangeText={(text)=> setQntProd(text)}/>
+            <HelperText type='error' visible={helperQnt}>Campo vazio</HelperText>
+            <Button mode='contained' style={styles.btn_adici} onPress={VerificaCampos} theme={inpt_style}>Adicionar</Button>
           </View>
        </Card>
    </View>
@@ -48,27 +76,26 @@ const styles = StyleSheet.create({
 
     card: {
       backgroundColor: '#FFF',
-      width: '93%',
-      height: 300
+      width: '95%',
+      height: 420,
+      display: 'flex',
+      paddingRight:10,
+      paddingLeft: 10
     },
 
-    content_card: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
 
     txt_preencha: {
       marginTop: 15,
       fontSize: 16,
       fontFamily: 'Roboto-Medium',
-      color: '#31405F'
+      color: '#31405F',
+      textAlign: 'center',
     },
 
     input_addprod: {
-      width: '95%',
       height: 60,
       backgroundColor: '#FFF',
+      width: '100%',
     },
 
     picker: {
@@ -78,11 +105,15 @@ const styles = StyleSheet.create({
 
     est_picker: {
       marginTop: 10,
-      width: '95%',
+      width: '100%',
       borderWidth: 1,
       borderColor: '#d9d9d9',
-      marginRight: 10,
-      marginLeft: 10,
       borderRadius: 10
+    },
+
+    btn_adici: {
+      width: '100%',
+      height: '10%',
+      marginTop: 10
     }
 })
