@@ -25,14 +25,31 @@ export default function pages() {
 
   function VerificaCampos(){
 
-    firebase.database().ref('Produtos').set({
-      nomeProd: {nomeproduto: nomeProd, marcaproduto: marcaProd, qntproduto: qntdProd }
+    if(nomeProd == '' || marcaProd == '' || qntdProd == ''){
+      if(nomeProd == ''){
+        setHelperNome(true)
+      }
 
-    }).then(()=>{
+      if(marcaProd == ''){
+        setHelperMarca(true)
+      }
+
+      if(qntdProd == ''){
+        setHelperQnt(true)
+      }
+    } else {
+
+    firebase.database().ref('Produtos').push(
+      
+      { nomeproduto: nomeProd, marcaproduto: marcaProd, qntproduto: qntdProd }
+
+    ).then(()=>{
       console.log("Produto adicionado!")
     }).catch(()=>{
       console.log("Produto não adicionado!")
     })
+
+    }
   }
 
 
@@ -49,10 +66,11 @@ export default function pages() {
             <HelperText type='error' visible={helperMarca}>Campo vazio</HelperText>
             <View style={styles.est_picker}>
             <Picker style={styles.picker} selectedValue={selectedLanguage} onValueChange={(itemValue, itemIndex) => setSelectedLanguage(itemValue)}>
-                <Picker.Item label="Alimentos" value="java" />
-                <Picker.Item label="Beleza" value="js" />
-                <Picker.Item label="Higiene" value="java" />
-                <Picker.Item label="Limpeza" value="js" />
+                <Picker.Item label="Selecione o tipo" value="java" />
+                <Picker.Item label="Alimentos" value="Alimentos" />
+                <Picker.Item label="Beleza" value="Beleza" />
+                <Picker.Item label="Higiene" value="Higiene" />
+                <Picker.Item label="Limpeza" value="Limpeza" />
             </Picker>
             </View>
             <TextInput keyboardType='phone-pad' label="Quantidade" style={styles.input_addprod} theme={inpt_style} onChangeText={(text)=> setQntProd(text)}/>

@@ -6,6 +6,7 @@ import { Button } from 'react-native-paper'
 import Login from './src/pages/Login'
 import Home from './src/pages/Home'
 import AddProduto from './src/pages/AddProduto'
+import ListaProduto from './src/pages/ListaProdutos'
 import firebase from './firebaseConfig'
 
 
@@ -27,9 +28,15 @@ export default function invetoryapp() {
          headerLeft: null,
          gestureEnabled: false,
         
-       })} navigatio />
+       })} />
        <Stack.Screen name="AddProduto" component={AddProduto} options={{ 
          title: 'Adicionar Produto',
+         headerTintColor: '#FFF',
+         headerTransparent: true,
+         }} />
+
+       <Stack.Screen name="ListaProduto" component={ListaProduto} options={{ 
+         title: 'Lista de Produtos',
          headerTintColor: '#FFF',
          headerTransparent: true,
          }} />

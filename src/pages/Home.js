@@ -8,6 +8,10 @@ export default function pages({navigation}) {
         navigation.navigate("AddProduto");
     }
 
+    function ListaProdutos(){
+        navigation.navigate("ListaProduto")
+    }
+
 
  return (
    <View style={styles.body}>
@@ -21,7 +25,7 @@ export default function pages({navigation}) {
                     <Text style={styles.txtcards}>Adicionar Produto</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btn_add}>
+                <TouchableOpacity style={styles.btn_add} onPress={ListaProdutos}>
                     <Image source={require('../img/list.png')} style={styles.img} />
                     <Text style={styles.txtcards}>Lista Produto</Text>
                 </TouchableOpacity>
