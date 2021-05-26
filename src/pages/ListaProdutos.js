@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableHighlight, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, FlatList, LogBox } from 'react-native';
 import { Card, List, TouchableRipple, Dialog, TextInput, Button } from 'react-native-paper'
 import { useState } from 'react/cjs/react.development';
 import firebase from '../../firebaseConfig'
 
-export default function ListaProdutos() {
+export default function ListaProdutos({navigation}) {
 
     const [database, setData] = useState([]);
     const [visibleDialog, setVisibileDialog] = useState(false);
 
     useEffect(()=>{
+        LogBox.ignoreLogs(['Setting a timer'])
         const data = firebase.database().ref('Produtos').on('value', function(snap){
             const list = [];
             snap.forEach(function (element){
@@ -19,26 +20,30 @@ export default function ListaProdutos() {
         })
     },[])
 
+    function ExcluirOrEdit(){
+        navigation.navigate("ExcluirOrEdit");
+    }
+
  return (
    <View style={styles.body}>
        <Card style={styles.card_content}>
        {database.map((prodlist)=>{
            return (
                <TouchableRipple onPress={()=> setVisibileDialog(true)}>
-               <List.Item title={prodlist.nomeproduto} description={prodlist.qntproduto} key={prodlist.qntproduto} style={styles.list_item}/>
+                    <List.Item title={prodlist.nomeproduto} description={prodlist.qntproduto} key={prodlist.qntproduto} style={styles.list_item}/>
                </TouchableRipple>
            )
        })}
-       <Dialog visible={visibleDialog}>
-                <Dialog.Title>Ações</Dialog.Title>
-                <Dialog.Content>
-                    <Text>Você deseja editar ou excluir esse registro?</Text>
-                </Dialog.Content>
+       <Dialog visible={visibleDialog} dismissable={false}>
+            <Dialog.Title>Ações</Dialog.Title>
+                    <Dialog.Content>
+                        <Text>Você deseja editar ou excluir esse registro?</Text>
+                    </Dialog.Content>
                 <Dialog.Actions>
-                    <Button onPress={()=> setVisibileDialog(false)}>Editar ou Excluir</Button>
+                    <Button onPress={ExcluirOrEdit}>Editar ou Excluir</Button>
                     <Button onPress={()=> setVisibileDialog(false)}>Fechar</Button>
                 </Dialog.Actions>
-                </Dialog>
+            </Dialog>
        </Card>
    </View>
   );

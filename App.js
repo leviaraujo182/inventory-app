@@ -7,6 +7,7 @@ import Login from './src/pages/Login'
 import Home from './src/pages/Home'
 import AddProduto from './src/pages/AddProduto'
 import ListaProduto from './src/pages/ListaProdutos'
+import ExlcuirOrEdit from './src/pages/ExcluirOrEdit'
 import firebase from './firebaseConfig'
 
 
@@ -37,6 +38,12 @@ export default function invetoryapp() {
 
        <Stack.Screen name="ListaProduto" component={ListaProduto} options={{ 
          title: 'Lista de Produtos',
+         headerTintColor: '#FFF',
+         headerTransparent: true,
+         }} />
+
+       <Stack.Screen name="ExcluirOrEdit" component={ExlcuirOrEdit} options={{ 
+         title: 'Excluir ou Editar',
          headerTintColor: '#FFF',
          headerTransparent: true,
          }} />
