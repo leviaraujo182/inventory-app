@@ -18,4 +18,4 @@ Além da tecnologia principal, o <b>React Native</b>, utilizamos <b>Firebase</b>
 Para o projeto rodar de maneira correta e sem qualquer tipo de erro, é necessário que você tenha uma conta no [Firebase](firebase.com) e associar o App a sua conta, assim, você poderá utilizar o sistema de login e o RealTimeDatabase da maneira que você quiser.
 
 # Algumas coisas ainda serão desenvolvidas
-Como pode se observar no projeto, algumas coisas na parte de menu entre outros detalhes de estilização serão desenvolvidos posteriormente.
+Como pode se observar no projeto, algumas coisas na parte de menu entre outros detalhes de estilização e funcionalidades serão desenvolvidos posteriormente.
