@@ -10,3 +10,12 @@ O maior intuito do App é auxiliar alguém que necessita ter um controle sobre u
 <img src="https://i.imgur.com/o2ezEyf.jpg" width="230" alt="Tela de ações do produto" />
 <img src="https://i.imgur.com/8LlywWo.jpg" width="230" alt="Tela de ações do produto" />
 </p>
+
+# Tecnologias utilizadas
+Além da tecnologia principal, o <b>React Native</b>, utilizamos <b>Firebase</b> e o <b>React Native Paper</b>. O <b>Firebase</b> foi utilizado para o fornecimento de duas funções, que é o sistema de login (Auth) e o banco de dados. Para a parte de front-end da aplicação, utilizamos o <b>React Native Paper</b>, que fornece ao projeto uma gama de componentes já estilizados com a temática de <b>Material Design</b>.
+
+# Como fazer o projeto funcionar
+Para o projeto rodar de maneira correta e sem qualquer tipo de erro, é necessário que você tenha uma conta no [Firebase](firebase.com) e associar o App a sua conta, assim, você poderá utilizar o sistema de login e o RealTimeDatabase da maneira que você quiser.
+
+# Algumas coisas ainda serão desenvolvidas
+Como pode se observar no projeto, algumas coisas na parte de menu entre outros detalhes de estilização serão desenvolvidos posteriormente.
